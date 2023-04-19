@@ -5,9 +5,9 @@ import com.sparta.myselectshop.dto.ProductRequestDto;
 import com.sparta.myselectshop.dto.ProductResponseDto;
 import com.sparta.myselectshop.entity.Product;
 import com.sparta.myselectshop.repository.ProductRepository;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,7 +32,9 @@ public class ProductService {
         return new ProductResponseDto(product);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
+//    트랜잭션이 커밋되어도 영속성 컨텍스트를 플러시하지 않는다. 플러시할 때 수행되는 엔티티의 스냅샷 비교 로직이 수행되지 않으므로
+//    성능을 향상 시킬 수 있다.
     public List<ProductResponseDto> getProducts(){
 //        ProductRepository productRepository = new ProductRepository();
 
