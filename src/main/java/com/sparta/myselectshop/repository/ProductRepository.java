@@ -11,13 +11,22 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
 public class ProductRepository{
 
-    public ProductResponseDto createProduct(Product product) throws SQLException {
+    private final String dbUrl;
+    private final String username;
+    private final String password;
 
+
+    public ProductRepository(String dbUrl, String username, String password) {
+        this.dbUrl = dbUrl;
+        this.username = username;
+        this.password = password;
+    }
+
+    public ProductResponseDto createProduct(Product product) throws SQLException {
         // DB 연결
-        Connection connection = DriverManager.getConnection("jdbc:h2:mem:db", "sa", "");
+        Connection connection = getConnection();
 
         // DB Query 작성
         PreparedStatement ps = connection.prepareStatement("select max(id) as id from product");
@@ -52,7 +61,7 @@ public class ProductRepository{
         List<ProductResponseDto> products = new ArrayList<>();
 
         // DB 연결
-        Connection connection = DriverManager.getConnection("jdbc:h2:mem:db", "sa", "");
+        Connection connection = getConnection();
 
         // DB Query 작성
         Statement stmt = connection.createStatement();
@@ -79,7 +88,7 @@ public class ProductRepository{
         Product product = new Product();
 
         // DB 연결
-        Connection connection = DriverManager.getConnection("jdbc:h2:mem:db", "sa", "");
+        Connection connection = getConnection();
 
         PreparedStatement ps = connection.prepareStatement("select * from product where id = ?");
         ps.setLong(1, id);
@@ -110,5 +119,9 @@ public class ProductRepository{
 
         // 응답 보내기 (업데이트된 상품 id)
         return product.getId();
+    }
+
+    public Connection getConnection() throws SQLException{
+        return DriverManager.getConnection(dbUrl,username,password);
     }
 }
