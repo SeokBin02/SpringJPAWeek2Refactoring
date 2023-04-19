@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 //@RequiredArgsConstructor
@@ -54,6 +55,7 @@ public class ProductService {
     public Long updateProduct(Long id, ProductMypriceRequestDto requestDto){
 //        ProductRepository productRepository = new ProductRepository();
         Product product = productRepository.findById(id).orElseThrow(() -> new NullPointerException("해당 상품은 존재하지 않아용!!"));
+//        Optional<Product> product = productRepository.findById(id); // Optional로 NPE를 막을 순 있지만 아래 method는 실행 불가
         product.setMyprice(requestDto.getMyprice());
 
         return product.getId();
