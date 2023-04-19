@@ -33,7 +33,7 @@ public class ProductController {
     // 관심 상품 최저가 등록하기
     @PutMapping("/products/{id}")
     public Long updateProduct(@PathVariable Long id, @RequestBody ProductMypriceRequestDto requestDto) throws SQLException {
-        ProductRepository productRepository = new ProductRepository();
-        return productRepository.updateProduct(id, requestDto);
+        ProductService productService = new ProductService();
+        return productService.updateProduct(id, requestDto);
     }
 }

@@ -1,5 +1,6 @@
 package com.sparta.myselectshop.service;
 
+import com.sparta.myselectshop.dto.ProductMypriceRequestDto;
 import com.sparta.myselectshop.dto.ProductRequestDto;
 import com.sparta.myselectshop.dto.ProductResponseDto;
 import com.sparta.myselectshop.entity.Product;
@@ -25,5 +26,10 @@ public class ProductService {
         ProductRepository productRepository = new ProductRepository();
 
         return productRepository.getProducts();
+    }
+
+    public Long updateProduct(Long id, ProductMypriceRequestDto requestDto) throws SQLException{
+        ProductRepository productRepository = new ProductRepository();
+        return productRepository.updateProduct(id, requestDto);
     }
 }
