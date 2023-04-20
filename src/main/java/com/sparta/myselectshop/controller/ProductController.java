@@ -4,6 +4,8 @@ import com.sparta.myselectshop.dto.ProductMypriceRequestDto;
 import com.sparta.myselectshop.dto.ProductRequestDto;
 import com.sparta.myselectshop.dto.ProductResponseDto;
 import com.sparta.myselectshop.service.ProductService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,23 +21,23 @@ public class ProductController {
 
     // 관심 상품 등록하기
     @PostMapping("/products")
-    public ProductResponseDto createProduct(@RequestBody ProductRequestDto requestDto){
+    public ProductResponseDto createProduct(@RequestBody ProductRequestDto requestDto, HttpServletRequest request){
 //        ProductService productService = new ProductService();
-        return productService.createProduct(requestDto);
+        return productService.createProduct(requestDto, request);
     }
 
     // 관심 상품 조회하기
     @GetMapping("/products")
-    public List<ProductResponseDto> getProducts(){
+    public List<ProductResponseDto> getProducts(HttpServletRequest request){
 //        ProductService productService = new ProductService();
-        return productService.getProducts();
+        return productService.getProducts(request);
     }
 
 
     // 관심 상품 최저가 등록하기
     @PutMapping("/products/{id}")
-    public Long updateProduct(@PathVariable Long id, @RequestBody ProductMypriceRequestDto requestDto){
+    public Long updateProduct(@PathVariable Long id, @RequestBody ProductMypriceRequestDto requestDto, HttpServletRequest request){
 //        ProductService productService = new ProductService();
-        return productService.updateProduct(id, requestDto);
+        return productService.updateProduct(id, requestDto, request);
     }
 }

@@ -1,5 +1,6 @@
 package com.sparta.myselectshop.entity;
 
+import com.sparta.myselectshop.dto.ProductMypriceRequestDto;
 import com.sparta.myselectshop.dto.ProductRequestDto;
 import com.sparta.myselectshop.naver.dto.ItemDto;
 import jakarta.persistence.*;
@@ -33,12 +34,20 @@ public class Product extends Timestamped{
     @Column(nullable = false)
     private int myprice;
 
-    public Product(ProductRequestDto requestDto) {
+    @Column(nullable = false)
+    private Long userId;
+
+    public Product(ProductRequestDto requestDto, Long userId) {
         this.title = requestDto.getTitle();
         this.image = requestDto.getImage();
         this.link = requestDto.getLink();
         this.lprice = requestDto.getLprice();
         this.myprice = 0;
+        this.userId = userId;
+    }
+
+    public void update(ProductMypriceRequestDto requestDto){
+        this.myprice = requestDto.getMyprice();
     }
 
     public void updateByItemDto(ItemDto itemDto){
